@@ -1,22 +1,16 @@
-
-#define ota_hostname "RF-BLASTER"
-#define ota_password "xxx"
-#define ota_port 8266
-
-
-
+// OTA
 
 
 void setupOTA()
 {
   // Port defaults to 8266
-  ArduinoOTA.setPort(ota_port);
+  ArduinoOTA.setPort(OTA_PORT);
   
   // Hostname defaults to esp8266-[ChipID]
-  ArduinoOTA.setHostname(ota_hostname);
+  ArduinoOTA.setHostname(HOSTNAME);
   
   // No authentication by default
-  ArduinoOTA.setPassword(ota_password); 
+  ArduinoOTA.setPassword(OTA_PASSWORD); 
 
 
   ArduinoOTA.onStart([]() {

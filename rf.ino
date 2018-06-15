@@ -1,19 +1,13 @@
-
-// D1 = GPIO 5
-// D2 = GPIO 4
-// D3 = GPIO 0 (flash)
-
-const uint rc_receive_pin = 5;
-const uint rc_send_pin = 4;
+// RF
 
 
 void setupRF()
 {
   //setup Receiver
-  mySwitch.enableReceive(rc_receive_pin);
+  mySwitch.enableReceive(RC_RECEIVE_PIN);
   
   // setup Transmitter 
-  mySwitch.enableTransmit(rc_send_pin);
+  mySwitch.enableTransmit(RC_SEND_PIN);
 
   // Optional set pulse length.
   mySwitch.setPulseLength(360);

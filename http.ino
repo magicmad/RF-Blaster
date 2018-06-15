@@ -1,11 +1,5 @@
 // HTTP SERVER
 
-char http_passcode[40] = "xxx";
-
-
-
-
-
 
 void setupWebServer()
 {
@@ -37,7 +31,7 @@ void handleSend()
   Serial.println("Connection received - Send");
 
   // check authorization
-  if (server.arg("pass") != http_passcode)
+  if (server.arg("pass") != HTTP_PASSCODE)
   {
     Serial.println("Unauthorized access");
     server.send(401, "text/html", "Unauthorized");
@@ -46,7 +40,9 @@ void handleSend()
   {
     if (server.hasArg("code")) {
       int code = server.arg("code").toInt();
+      
       rf_send(code);
+      
       server.send(200, "text/html", "code sent");
       Serial.print("code send:");
       Serial.println(code);
