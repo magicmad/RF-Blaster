@@ -32,29 +32,32 @@ void setup()
   Serial.println("starting ESP8266 RF-Blaster...");
 
   setupWifi();
-  
+
   setupMDNS();
-  
+
   setupWebServer();
 
   setupOTA();
-  
+
   setupRF();
-  
+
   setupFauxmo();
-  
+
   Serial.println("Setup OK");
   delay(100);
 }
 
 void loop()
 {
+  // Let the Library do its thing
+  fauxmo.handle();
+
   // perform MDNS actions
   mdns.update();
 
   // perform webserver actions
   server.handleClient();
-  
+
   // perform OTA actions
   ArduinoOTA.handle();
 
