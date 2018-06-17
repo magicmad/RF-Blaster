@@ -22,7 +22,8 @@
 
 
 // NETWORK
-#define HOSTNAME "RF-BLASTER"
+const char* HOSTNAME = "RF-BLASTER";
+
 const IPAddress ip(10,1,1,42);
 const IPAddress gateway(10,1,1,1);
 const IPAddress subnet(255,255,255,0);
@@ -37,10 +38,10 @@ const IPAddress subnet(255,255,255,0);
 #define OTA_PORT 8266
 
 
-// Fauxmo
+// Fauxmo - Wemos switch simulation
 // set number of used switches and their on and off codes - make sure the array has the correct number of elements
-#define SWITCH_COUNT 2
-const char* RelayNames[] = { "Schalter eins", "Schalter zwei" };
-const int RelayCodesOn[] = { 1234, 56789 };
-const int RelayCodesOff[] = { 4576, 4576 };
+#define SWITCH_COUNT 4
+const char* RelayNames[] = { "Badezimmerlicht", "Schlafzimmerlicht", "Arbeitszimmerlicht", "Küchenlicht" };
+const int RelayCodesOn[] = { 11144421, 11144431, 11144441, 1381719 };
+const int RelayCodesOff[] = { 11144422, 11144432, 11144442, 1381716 };
 

@@ -3,6 +3,8 @@
 
 void setupWebServer()
 {
+  Serial.println("-setup WebServer");
+  
   // Configure the server
   server.on("/send", []() {handleSend(); });
 
@@ -11,12 +13,15 @@ void setupWebServer()
   server.onNotFound ( handleNotFound );
   
   server.begin();
-  Serial.println("HTTP Server started");
+  
+  Serial.println("-setup WebServer OK");
 }
 
 void handleRoot()
 {
-    String out = "<html><head><title>RC-BLASTER</title></head>";
+    String out = "<html><head><title>";
+    out += HOSTNAME;
+    out += "</title></head>";
     out += "<body>";
     out += "Ready to serve, master!";
     out += "<br>Last code was: ";
@@ -28,7 +33,7 @@ void handleRoot()
 
 void handleSend()
 {
-  Serial.println("Connection received - Send");
+  Serial.println("Connection received");
 
   // check authorization
   if (server.arg("pass") != HTTP_PASSCODE)
@@ -38,7 +43,8 @@ void handleSend()
   }
   else
   {
-    if (server.hasArg("code")) {
+    if (server.hasArg("code"))
+    {
       int code = server.arg("code").toInt();
       
       rf_send(code);

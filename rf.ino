@@ -3,6 +3,8 @@
 
 void setupRF()
 {
+  Serial.println("-setup RF");
+  
   //setup Receiver
   mySwitch.enableReceive(RC_RECEIVE_PIN);
   
@@ -18,7 +20,7 @@ void setupRF()
   // Optional set number of transmission repetitions.
   // mySwitch.setRepeatTransmit(15);
 
-  Serial.println("RF setup OK");
+  Serial.println("-setup RF OK");
 }
   
 void rf_receive()

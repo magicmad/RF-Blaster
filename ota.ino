@@ -3,6 +3,8 @@
 
 void setupOTA()
 {
+  Serial.println("-setup OTA");
+  
   // Port defaults to 8266
   ArduinoOTA.setPort(OTA_PORT);
   
@@ -36,5 +38,5 @@ void setupOTA()
 
   ArduinoOTA.begin();
 
-  Serial.println("mDNS setup OK");
+  Serial.println("-setup OTA OK");
 }

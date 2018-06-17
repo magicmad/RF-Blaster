@@ -29,7 +29,9 @@ void setup()
 {
   // Initialize serial output
   Serial.begin(SERIAL_BAUDRATE);
-  Serial.println("starting ESP8266 RF-Blaster...");
+  
+  Serial.print("starting ");
+  Serial.println(HOSTNAME);
 
   setupWifi();
 
@@ -43,13 +45,13 @@ void setup()
 
   setupFauxmo();
 
-  Serial.println("Setup OK");
-  delay(100);
+  Serial.println("--Setup OK");
+  Serial.println("");
 }
 
 void loop()
 {
-  // Let the Library do its thing
+  // perform Fauxmo actions
   fauxmo.handle();
 
   // perform MDNS actions

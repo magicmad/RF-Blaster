@@ -3,7 +3,7 @@
 
 void setupWifi()
 {
-  Serial.println("starting wifi setup.");
+  Serial.println("-setup WIFI");
   
   // set mode
   WiFi.mode(WIFI_STA);
@@ -27,4 +27,6 @@ void setupWifi()
   Serial.println(WIFI_SSID);
   Serial.print("IP address: ");
   Serial.println( WiFi.localIP() );
+
+  Serial.println("-setup WIFI OK");
 }

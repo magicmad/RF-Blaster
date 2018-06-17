@@ -7,9 +7,14 @@ bool SwitchState[SWITCH_COUNT];
 
 void setupFauxmo()
 {
+  Serial.println("-setup FAUXMO");
+  
   // not in use
   if(SWITCH_COUNT == 0)
+  {
+    Serial.println("Fauxmo is disabled");
     return;
+  }
   
   
   // start fauxmo library
@@ -18,9 +23,13 @@ void setupFauxmo()
   // Add virtual devices
   for (int i = 0; i < SWITCH_COUNT; i = i + 1)
   {
+    Serial.print("adding device: ");
+    Serial.print(i);
+    Serial.print(" name: ");
+    Serial.println(RelayNames[i]);
+
     fauxmo.addDevice(RelayNames[i]);
   }
-  
   
   fauxmo.onSetState([](unsigned char device_id, const char * device_name, bool state)
   {
@@ -45,11 +54,12 @@ void setupFauxmo()
       //store state for query
       SwitchState[device_id] = state;
     }
-  });
-  
+  });  
   
   fauxmo.onGetState([](unsigned char device_id, const char * device_name)
   {
     return SwitchState[device_id];
   });
+
+  Serial.println("-setup FAUXMO OK");
 }
