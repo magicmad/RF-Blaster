@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
 #include <ESP8266WebServer.h>
@@ -29,7 +30,7 @@ void setup()
 {
   // Initialize serial output
   Serial.begin(SERIAL_BAUDRATE);
-  
+
   Serial.print("starting ");
   Serial.println(HOSTNAME);
 
