@@ -4,7 +4,7 @@
 // client to perform http requests
 HTTPClient http;
 
-// store the relays state
+// store the relays state (this estimation is only correct if usage is only via alexa)
 bool SwitchState[sizeof(RFNames)];
 
 
@@ -65,6 +65,13 @@ void setupFauxmo()
 
   fauxmo.onGetState([](unsigned char device_id, const char * device_name)
   {
+    // no state yet for http devices
+    if(device_id > sizeof(RFNames))
+    {
+      return false;
+    }
+
+    // send state of RC device
     return SwitchState[device_id];
   });
 
@@ -97,6 +104,8 @@ void sendRF(int device_id, bool state)
 
 void sendHTTP(int device_id, bool state)
 {
+  Serial.println("sending http request");
+
   const char* url = HttpOn[device_id];
   if (!state)
   {
@@ -106,13 +115,16 @@ void sendHTTP(int device_id, bool state)
   HTTPClient http;    //Declare object of class HTTPClient
 
   http.begin(url);      //Specify request destination
-  http.addHeader("Content-Type", "text/plain");  //Specify content-type header
-
-  int httpCode = http.POST("Message from ESP8266");   //Send the request
-  String payload = http.getString();                  //Get the response payload
-
+  //http.addHeader("Content-Type", "text/plain");  //Specify content-type header
+  //int httpCode = http.POST("Message from ESP8266");   //Send the POST request
+  int httpCode = http.GET();  // Send GET request
+  Serial.print("httpCode: ");
   Serial.println(httpCode);   //Print HTTP return code
-  Serial.println(payload);    //Print request response payload
+  if (httpCode > 0)
+  { //Check the returning code
+    String payload = http.getString();   //Get the request response payload
+    Serial.println(payload);             //Print the response payload
+  }
 
   http.end();  //Close connection
 }

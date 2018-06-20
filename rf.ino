@@ -44,6 +44,7 @@ void rf_send(int code)
   Serial.print("RF send: ");
   Serial.println(code);
 
+  //TODO: check if code is from RF on or off code list - set fauxmo switchstate variable
 
 
   /* See Example: TypeA_WithDIPSwitches */
