@@ -23,7 +23,7 @@ MDNSResponder mdns;
 RCSwitch mySwitch = RCSwitch();
 
 // last received code
-int lastcode;
+int lastcode = 0;
 
 
 void setup()

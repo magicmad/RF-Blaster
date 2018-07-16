@@ -5,7 +5,7 @@ void setupWebServer()
 {
   Serial.println("-setup WebServer");
 
-  // Configure the server
+  // setup the webpages
   server.on("/send", []() {
     handleSend();
   });
@@ -18,7 +18,7 @@ void setupWebServer()
 
   server.begin();
 
-  Serial.println("-setup WebServer OK");
+  Serial.println("-setup WebServer - OK");
 }
 
 void handleRoot()
@@ -28,8 +28,10 @@ void handleRoot()
   out += "</title></head>";
   out += "<body>";
   out += "Ready to serve, master!";
-  out += "<br>Last code was: ";
+  out += "<br><br>Last received code was: ";
   out += lastcode;
+  out += "<br><br>Send a code:<br>";
+  out += "<form action='/send'>Password:<input type='text' name='pass'> Code:<input type='text' name='code'><input type='submit' value='send'></input></form>";
   out += "</body>";
   out += "</html>";
   server.send(200, "text/html", out);
@@ -40,10 +42,11 @@ void handleSend()
   Serial.println("Connection received");
 
   // check authorization
-  if (server.arg("pass") != HTTP_PASSCODE)
+  if (!server.hasArg("pass") || server.arg("pass") != HTTP_PASSCODE)
   {
-    Serial.println("Unauthorized access");
+    Serial.println("Wrong Passcode! ACCESS DENIED");
     server.send(401, "text/html", "Unauthorized");
+    return;
   }
   else
   {
@@ -60,7 +63,7 @@ void handleSend()
     else
     {
       server.send(200, "text/html", "code error");
-      Serial.println("code error");
+      Serial.println("no code supplied error");
     }
   }
 }

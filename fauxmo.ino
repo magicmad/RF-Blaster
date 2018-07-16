@@ -12,7 +12,7 @@ void setupFauxmo()
 {
   Serial.println("-setup FAUXMO");
 
-  // not in use
+  // not in use?
   if (sizeof(RFNames) == 0 && sizeof(HttpNames) == 0)
   {
     Serial.println("Fauxmo is disabled");
@@ -23,8 +23,12 @@ void setupFauxmo()
   // start fauxmo library
   fauxmo.enable(true);
 
+  int rfcount = sizeof(RFNames)/sizeof(char*);
+  Serial.print("RF device count: ");
+  Serial.println(rfcount);
+  
   // Add virtual devices for RF
-  for (int i = 0; i < sizeof(RFNames); i = i + 1)
+  for (int i = 0; i < rfcount; i = i + 1)
   {
     Serial.print("adding RF device: ");
     Serial.print(i);
@@ -33,9 +37,14 @@ void setupFauxmo()
 
     fauxmo.addDevice(RFNames[i]);
   }
-
+  
+  
+  int httpcount = sizeof(HttpNames)/sizeof(char*);
+  Serial.print("HTTP device count: ");
+  Serial.println(httpcount );
+  
   // Add virtual devices for HTTP requests
-  for (int i = 0; i < sizeof(HttpNames); i = i + 1)
+  for (int i = 0; i < httpcount; i = i + 1)
   {
     Serial.print("adding HTTP device: ");
     Serial.print(i);
@@ -65,13 +74,13 @@ void setupFauxmo()
 
   fauxmo.onGetState([](unsigned char device_id, const char * device_name)
   {
-    // no state yet for http devices
+    // state not supported yet for http devices
     if(device_id > sizeof(RFNames))
     {
       return false;
     }
 
-    // send state of RC device
+    // send state of RF device
     return SwitchState[device_id];
   });
 

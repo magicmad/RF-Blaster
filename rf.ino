@@ -6,10 +6,10 @@ void setupRF()
   Serial.println("-setup RF");
 
   //setup Receiver
-  mySwitch.enableReceive(RC_RECEIVE_PIN);
+  mySwitch.enableReceive(RF_RECEIVE_PIN);
 
   // setup Transmitter
-  mySwitch.enableTransmit(RC_SEND_PIN);
+  mySwitch.enableTransmit(RF_SEND_PIN);
 
   // Optional set pulse length.
   mySwitch.setPulseLength(360);
@@ -20,7 +20,7 @@ void setupRF()
   // Optional set number of transmission repetitions.
   // mySwitch.setRepeatTransmit(15);
 
-  Serial.println("-setup RF OK");
+  Serial.println("-setup RF - OK");
 }
 
 void rf_receive()
