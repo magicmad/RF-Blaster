@@ -67,6 +67,8 @@ void setupFauxmo()
     }
     else
     {
+      // adjust number to match the http array
+      device_id = device_id - rfcount;
       // HTTP
       sendHTTP(device_id, state);
     }
