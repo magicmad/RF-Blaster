@@ -5,7 +5,7 @@
 HTTPClient http;
 
 // store the relays state (this estimation is only correct if usage is only via alexa)
-bool SwitchState[sizeof(RFNames)];
+bool SwitchState[sizeof(RFNames)/sizeof(char*)];
 
 
 void setupFauxmo()
@@ -60,7 +60,7 @@ void setupFauxmo()
     Serial.printf("[MAIN] Device #%d (%s) state: %s\n", device_id, device_name, state ? "ON" : "OFF");
 
     // RF or HTTP ?
-    if (device_id < sizeof(RFNames))
+    if (device_id < rfcount)
     {
       // RF
       sendRF(device_id, state);
@@ -75,7 +75,7 @@ void setupFauxmo()
   fauxmo.onGetState([](unsigned char device_id, const char * device_name)
   {
     // state not supported yet for http devices
-    if(device_id > sizeof(RFNames))
+    if(device_id > rfcount)
     {
       return false;
     }
