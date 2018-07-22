@@ -1,12 +1,10 @@
 // FAUXMO
 
 
-// client to perform http requests
-HTTPClient http;
-
 // store the relays state (this estimation is only correct if usage is only via alexa)
 bool SwitchState[sizeof(RFNames)/sizeof(char*)];
 
+int rfcount = sizeof(RFNames)/sizeof(char*);
 
 void setupFauxmo()
 {
@@ -23,7 +21,7 @@ void setupFauxmo()
   // start fauxmo library
   fauxmo.enable(true);
 
-  int rfcount = sizeof(RFNames)/sizeof(char*);
+
   Serial.print("RF device count: ");
   Serial.println(rfcount);
   
