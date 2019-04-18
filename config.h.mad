@@ -8,8 +8,8 @@
 
 
 // WIFI access
-#define WIFI_SSID "xxxx"
-#define WIFI_PASS "xxxx"
+#define WIFI_SSID "DolphinsAteMyDog!"
+#define WIFI_PASS "9011671909698"
 
 
 
@@ -58,12 +58,12 @@ const char* topicIn = "home/obergeschoss/rf-blaster";
 
 
 // WEBSERVER
-#define HTTP_PASSCODE  "xxxx"
+#define HTTP_PASSCODE  "OcTzh5UmAqVx"
 
 
 
 // OTA UPDATE
-#define OTA_PASSWORD "xxxx"
+#define OTA_PASSWORD "OcTzh5UmA765"
 //#define OTA_PORT 8266
 
 

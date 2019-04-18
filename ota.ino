@@ -6,7 +6,7 @@ void setupOTA()
   Serial.println("-setup OTA");
 
   // Port defaults to 8266
-  ArduinoOTA.setPort(OTA_PORT);
+  //ArduinoOTA.setPort(OTA_PORT);
 
   // Hostname defaults to esp8266-[ChipID]
   ArduinoOTA.setHostname(HOSTNAME);

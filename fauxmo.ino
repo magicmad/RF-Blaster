@@ -2,9 +2,9 @@
 
 
 // store the relays state (this estimation is only correct if usage is only via alexa)
-bool SwitchState[sizeof(RFNames)/sizeof(char*)];
+bool SwitchState[sizeof(RFNames) / sizeof(char*)];
 
-int rfcount = sizeof(RFNames)/sizeof(char*);
+int rfcount = sizeof(RFNames) / sizeof(char*);
 
 void setupFauxmo()
 {
@@ -24,7 +24,7 @@ void setupFauxmo()
 
   Serial.print("RF device count: ");
   Serial.println(rfcount);
-  
+
   // Add virtual devices for RF
   for (int i = 0; i < rfcount; i = i + 1)
   {
@@ -35,25 +35,26 @@ void setupFauxmo()
 
     fauxmo.addDevice(RFNames[i]);
   }
-  
-  
-  int httpcount = sizeof(HttpNames)/sizeof(char*);
-  Serial.print("HTTP device count: ");
-  Serial.println(httpcount );
-  
-  // Add virtual devices for HTTP requests
-  for (int i = 0; i < httpcount; i = i + 1)
-  {
-    Serial.print("adding HTTP device: ");
-    Serial.print(i);
-    Serial.print(" name: ");
-    Serial.println(HttpNames[i]);
 
-    fauxmo.addDevice(HttpNames[i]);
-  }
+
+  //  int httpcount = sizeof(HttpNames)/sizeof(char*);
+  //  Serial.print("HTTP device count: ");
+  //  Serial.println(httpcount );
+  //
+  //  // Add virtual devices for HTTP requests
+  //  for (int i = 0; i < httpcount; i = i + 1)
+  //  {
+  //    Serial.print("adding HTTP device: ");
+  //    Serial.print(i);
+  //    Serial.print(" name: ");
+  //    Serial.println(HttpNames[i]);
+  //
+  //    fauxmo.addDevice(HttpNames[i]);
+  //  }
 
   // add fauxmo callbacks
-  fauxmo.onSetState([](unsigned char device_id, const char * device_name, bool state)
+
+  fauxmo.onSetState([](unsigned char device_id, const char * device_name, bool state, unsigned char value)
   {
     Serial.printf("[MAIN] Device #%d (%s) state: %s\n", device_id, device_name, state ? "ON" : "OFF");
 
@@ -63,26 +64,26 @@ void setupFauxmo()
       // RF
       sendRF(device_id, state);
     }
-    else
-    {
-      // adjust number to match the http array
-      device_id = device_id - rfcount;
-      // HTTP
-      sendHTTP(device_id, state);
-    }
+    //    else
+    //    {
+    //      // adjust number to match the http array
+    //      device_id = device_id - rfcount;
+    //      // HTTP
+    //      sendHTTP(device_id, state);
+    //    }
   });
 
-  fauxmo.onGetState([](unsigned char device_id, const char * device_name)
-  {
-    // state not supported yet for http devices
-    if(device_id > rfcount)
-    {
-      return false;
-    }
-
-    // send state of RF device
-    return SwitchState[device_id];
-  });
+  //  fauxmo.onGetState([](unsigned char device_id, const char * device_name)
+  //  {
+  //    // state not supported yet for http devices
+  //    if(device_id > rfcount)
+  //    {
+  //      return false;
+  //    }
+  //
+  //    // send state of RF device
+  //    return SwitchState[device_id];
+  //  });
 
   Serial.println("-setup FAUXMO OK");
 }
@@ -111,30 +112,30 @@ void sendRF(int device_id, bool state)
   }
 }
 
-void sendHTTP(int device_id, bool state)
-{
-  Serial.println("sending http request");
-
-  const char* url = HttpOn[device_id];
-  if (!state)
-  {
-    url = HttpOff[device_id];
-  }
-
-  HTTPClient http;    //Declare object of class HTTPClient
-
-  http.begin(url);      //Specify request destination
-  //http.addHeader("Content-Type", "text/plain");  //Specify content-type header
-  //int httpCode = http.POST("Message from ESP8266");   //Send the POST request
-  int httpCode = http.GET();  // Send GET request
-  Serial.print("httpCode: ");
-  Serial.println(httpCode);   //Print HTTP return code
-  if (httpCode > 0)
-  { //Check the returning code
-    String payload = http.getString();   //Get the request response payload
-    Serial.println(payload);             //Print the response payload
-  }
-
-  http.end();  //Close connection
-}
+//void sendHTTP(int device_id, bool state)
+//{
+//  Serial.println("sending http request");
+//
+//  const char* url = HttpOn[device_id];
+//  if (!state)
+//  {
+//    url = HttpOff[device_id];
+//  }
+//
+//  HTTPClient http;    //Declare object of class HTTPClient
+//
+//  http.begin(url);      //Specify request destination
+//  //http.addHeader("Content-Type", "text/plain");  //Specify content-type header
+//  //int httpCode = http.POST("Message from ESP8266");   //Send the POST request
+//  int httpCode = http.GET();  // Send GET request
+//  Serial.print("httpCode: ");
+//  Serial.println(httpCode);   //Print HTTP return code
+//  if (httpCode > 0)
+//  { //Check the returning code
+//    String payload = http.getString();   //Get the request response payload
+//    Serial.println(payload);             //Print the response payload
+//  }
+//
+//  http.end();  //Close connection
+//}
 
